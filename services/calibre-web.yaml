@@ -10,5 +10,18 @@ services:
       - DOCKER_MODS=linuxserver/mods:universal-calibre
       - OAUTHLIB_RELAX_TOKEN_SCOPE=1
     volumes:
-      - configcalibre:/config
-      - torrents:/torrents
+      #- configcalibre:/config
+      #- torrents:/torrents
+      - type: bind
+        source: $HOST_MEDIA_PATH/books
+        target: /books
+      - type: bind
+        source: $HOST_CONFIG_PATH/calibre
+        target: /config
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: traefik-network
+    external: true

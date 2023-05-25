@@ -4,16 +4,24 @@ services:
     container_name: deluge
     restart: always
     volumes:
-      - torrents:/torrents
-      - configdeluge:/config
-      - downloads:/downloads
+      #- torrents:/torrents
+      #- configdeluge:/config
+      #- downloads:/downloads
+      - type: bind
+        source: $HOST_MEDIA_PATH
+        target: /torrents
+      - type: bind
+        source: $HOST_CONFIG_PATH/deluge
+        target: /config  
     environment:
       - PGID=${PGID}
       - PUID=${PUID}
       - TZ=${TZ}
-
-volumes:
-  configdeluge: 
-    driver: local-persist
-    driver_opts:
-      mountpoint: $HOST_CONFIG_PATH/deluge
+    networks:
+      - internal
+      
+networks:
+  internal:
+    name: traefik-network
+    external: true
+    

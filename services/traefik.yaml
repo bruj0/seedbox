@@ -10,14 +10,19 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik:/etc/traefik:ro
-      - configtraefik:/config
+      - /mnt/data/seedbox/traefik:/etc/traefik:ro
+      #- configtraefik:/config
+      - type: bind
+        source: $HOST_CONFIG_PATH/traefik
+        target: /config
     environment:
       - TRAEFIK_DOMAIN=${TRAEFIK_DOMAIN}
       - TZ=${TZ}
-
-volumes:
-  configtraefik:
-    driver: local-persist
-    driver_opts:
-      mountpoint: $HOST_CONFIG_PATH/traefik
+    networks:
+      - internal
+      
+networks:
+  internal:
+    name: traefik-network
+    external: true
+    

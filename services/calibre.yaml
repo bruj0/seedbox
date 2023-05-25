@@ -7,14 +7,27 @@ services:
       - PGID=${PGID}
       - PUID=${PUID}
       - TZ=${TZ}
-      - PASSWORD=${CALIBRE_PASSWORD}
+      #- PASSWORD=${CALIBRE_PASSWORD}
       - CLI_ARGS=
     volumes:
-      - configcalibre:/config
-      - torrents:/torrents
+      #- configcalibre:/config
+      #- torrents:/torrents
+      - type: bind
+        source: $HOST_MEDIA_PATH/books
+        target: /books
+      - type: bind
+        source: $HOST_CONFIG_PATH/calibre
+        target: /config
+    networks:
+      - internal
 
-volumes:
-  configcalibre: 
-    driver: local-persist
-    driver_opts:
-      mountpoint: $HOST_CONFIG_PATH/calibre
+networks:
+  internal:
+    name: traefik-network
+    external: true
+
+#volumes:
+#  configcalibre: 
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: $HOST_CONFIG_PATH/calibre

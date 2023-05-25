@@ -3,7 +3,7 @@ services:
     image: ghcr.io/linuxserver/plex
     container_name: plex
     restart: always
-    network_mode: host
+#    network_mode: host
     ports:
       - "32400:32400"
       - "32400:32400/udp"
@@ -14,16 +14,20 @@ services:
       - "32413:32413/udp"
       - "32414:32414/udp"
     volumes:
-      - configplex:/config
-      - torrents:/torrents
+
     environment:
-      - PGID=${PGID}
-      - PUID=${PUID}
+      #- PGID=${PGID}
+      #- PUID=${PUID}
+      - PGID=0
+      - PUID=0
       - TZ=${TZ}
       - VERSION=latest
-
-volumes:
-  configplex:
-    driver: local-persist
-    driver_opts:
-      mountpoint: $HOST_CONFIG_PATH/Plex
+      - PLEX_CLAIM=claim-Hspz6weJgGMyWG3Nmwzw
+    networks:
+      - internal
+      
+networks:
+  internal:
+    name: traefik-network
+    external: true
+    

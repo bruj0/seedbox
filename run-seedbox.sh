@@ -281,16 +281,16 @@ echo "[$0] ***** Config OK. Launching services... *****"
 
 if [[ "${SKIP_PULL}" != "1" ]]; then
   echo "[$0] ***** Pulling all images... *****"
-  ${DOCKER_COMPOSE_BINARY} ${ALL_SERVICES} pull
+  echo ${DOCKER_COMPOSE_BINARY} ${ALL_SERVICES} pull
 fi
 
 echo "[$0] ***** Recreating containers if required... *****"
-${DOCKER_COMPOSE_BINARY} ${ALL_SERVICES} up -d --remove-orphans
+echo ${DOCKER_COMPOSE_BINARY} ${ALL_SERVICES} up -d --remove-orphans
 echo "[$0] ***** Done updating containers *****"
 
 echo "[$0] ***** Clean unused images and volumes... *****"
-docker image prune -af
-docker volume prune  -f
+#docker image prune -af
+#docker volume prune  -f
 
 echo "[$0] ***** Done! *****"
 exit 0
