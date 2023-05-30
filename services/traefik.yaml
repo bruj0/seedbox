@@ -21,8 +21,8 @@ services:
     networks:
       - internal
       
+# Common network used by all services
 networks:
   internal:
-    name: traefik-network
-    external: true
-    
+    name: "traefik-network"
+        

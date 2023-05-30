@@ -5,8 +5,8 @@ services:
     restart: always
 #    network_mode: host
     ports:
-      - "32400:32400"
-      - "32400:32400/udp"
+      - "42400:32400"
+      - "42400:32400/udp"
       - "32469:32469"
       - "32469:32469/udp"
       - "32410:32410/udp"
@@ -14,12 +14,15 @@ services:
       - "32413:32413/udp"
       - "32414:32414/udp"
     volumes:
-
+      - type: bind
+        source: /mnt/data/data
+        target: /torrents
+      - type: bind
+        source: /mnt/data/seedbox/data/config/Plex
+        target: /config
     environment:
-      #- PGID=${PGID}
-      #- PUID=${PUID}
-      - PGID=0
-      - PUID=0
+      - PGID=${PGID}
+      - PUID=${PUID}
       - TZ=${TZ}
       - VERSION=latest
       - PLEX_CLAIM=claim-Hspz6weJgGMyWG3Nmwzw

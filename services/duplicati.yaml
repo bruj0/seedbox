@@ -12,7 +12,7 @@ services:
       # - backups:/backups
       # - config:/source
       - type: bind
-        source: /mnt/data/data
+        source: /mnt/data
         target: /data
       - type: bind
         source: /mnt/data/backups
@@ -20,6 +20,12 @@ services:
       - type: bind
         source: $HOST_CONFIG_PATH/duplicati
         target: /config
+      - type: bind
+        source: /mnt/onedrive
+        target: /onedrive
+      - type: bind
+        source: /mnt/googledrive
+        target: /googledrive
     networks:
       - internal
       

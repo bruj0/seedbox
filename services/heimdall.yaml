@@ -4,14 +4,25 @@ services:
     container_name: heimdall
     restart: always
     volumes:
-      - configheimdall:/config
+      #- configheimdall:/config
+      - type: bind
+        source: /mnt/data/seedbox/data/config/heimdall
+        target: /config
     environment:
-      - PGID=${PGID}
-      - PUID=${PUID}
+      #- PGID=${PGID}
+      #- PUID=${PUID}
+      - PGID=1000
+      - PUID=1000
       - TZ=${TZ}
-
-volumes:
-  configheimdall:
-    driver: local-persist
-    driver_opts:
-      mountpoint: $HOST_CONFIG_PATH/heimdall
+    networks:
+      - internal
+      
+networks:
+  internal:
+    name: traefik-network
+    external: true
+# volumes:
+#   configheimdall:
+#     driver: local-persist
+#     driver_opts:
+#       mountpoint: $HOST_CONFIG_PATH/heimdall

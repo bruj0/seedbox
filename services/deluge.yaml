@@ -13,7 +13,12 @@ services:
       - type: bind
         source: $HOST_CONFIG_PATH/deluge
         target: /config  
+    ports:
+      - 8112:8112
+      - 6688:6888
+      - 6688:6688/udp
     environment:
+      - DELUGE_LOGLEVEL=info
       - PGID=${PGID}
       - PUID=${PUID}
       - TZ=${TZ}
